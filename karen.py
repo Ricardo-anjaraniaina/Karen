@@ -57,8 +57,22 @@ while True:
         parler("au revoir")
         break
 
-    if "date" in commande:
-        parler("On est le : ")
+    elif "heure" in commande:
+        from datetime import datetime
+        heure = datetime.now().strftime("%H heures %M")
+        parler("Il est : " + heure)
 
-    response = reflechir(commande)
-    parler(response)
+    elif "date" in commande or "jour" in datetime:
+        from datetime import datetime
+        jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+        mois = ["janvier", "février", "mars", "avril", "mai", "juin",
+                "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+
+        maintenant = datetime.now()
+        jour = jours[maintenant.weekday()]
+        date = str(maintenant.day) + " " + mois[maintenant.month - 1] + " " + str(maintenant.year)
+        parler("Nous sommes " + jour + " " + date)
+
+    else:
+        response = reflechir(commande)
+        parler(response)
