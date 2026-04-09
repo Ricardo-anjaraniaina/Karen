@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import pyttsx3
 import ollama
+from app import APPLICATIONS
 
 def parler(texte):
     print("Karen : " + texte)
@@ -73,6 +74,18 @@ while True:
         date = str(maintenant.day) + " " + mois[maintenant.month - 1] + " " + str(maintenant.year)
         parler("Nous sommes " + jour + " " + date)
 
+    #ouverture d'application
+    elif "ouvre" in commande :
+        import os
+        app_trouvee = False
+        for nom, chemins in APPLICATIONS.items():
+            if nom in commande:
+                os.startfile(chemins)
+                parler("J'ouvre " + nom)
+                app_trouvee = True
+                break
+            if not app_trouvee:
+                parler("Je ne trouve pas cette application.")
     else:
         response = reflechir(commande)
         parler(response)
